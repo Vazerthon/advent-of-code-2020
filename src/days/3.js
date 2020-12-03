@@ -1,4 +1,16 @@
-'use strict';
+const testInput = [
+  '..##.......',
+  '#...#...#..',
+  '.#....#..#.',
+  '..#.#...#.#',
+  '.#...##..#.',
+  '..#.##.....',
+  '.#.#.#....#',
+  '.#........#',
+  '#.##...#...',
+  '#...##....#',
+  '.#..#...#.#',
+];
 
 const realInput = [
   '...#...###......##.#..#.....##.',
@@ -345,6 +357,10 @@ const getTreesOnSlope = (input, right, down) => {
   }
 
   return trees.filter((x) => x === '#').length;
+}
+
+const one = (input) => () => {
+  return getTreesOnSlope(input, 3, 1)
 };
 
 const two = (input) => () => {
@@ -360,6 +376,6 @@ const two = (input) => () => {
     getTreesOnSlope(input, 1, 2)
   )
 };
-const partTwo = two(realInput);
 
-console.log(partTwo());
+export const partOne = one(realInput);
+export const partTwo = two(realInput);
