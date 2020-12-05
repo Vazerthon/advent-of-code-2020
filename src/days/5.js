@@ -1,4 +1,4 @@
-'use strict';
+const testInput = ['BFFFBBFRRR', 'FFFBBBFRRR', 'BBFFBBFRLL'];
 
 const realInput = [
   'BFBBBFBLRR',
@@ -824,12 +824,20 @@ const rowColNumbersToSeatId = ([rowNumber, colNumber]) =>
 
 const codeToSeatId = (code) => codeToRowColParts(code);
 
+const one = (input) => () =>
+  Math.max(
+    ...input
+      .map(codeToSeatId)
+      .map(rowColPartsToNumbers)
+      .map(rowColNumbersToSeatId),
+  );
+
 const two = (input) => () => input
     .map(codeToSeatId)
     .map(rowColPartsToNumbers)
     .map(rowColNumbersToSeatId)
     .sort((a, b) => a - b)
     .filter((x, i, all) => all[i + 1] !== x + 1);
-const partTwo = two(realInput);
 
-console.log(partTwo());
+export const partOne = one(realInput);
+export const partTwo = two(realInput);
