@@ -1,4 +1,20 @@
-'use strict';
+const testInput = [
+  'abc',
+  '',
+  'a',
+  'b',
+  'c',
+  '',
+  'ab',
+  'ac',
+  '',
+  'a',
+  'a',
+  'a',
+  'a',
+  '',
+  'b',
+];
 
 const realInput = [
   'fbqjswm',
@@ -2308,7 +2324,15 @@ const toOnlyDupes = (arrayOfStrings) =>
       .join(''),
   );
 
-const filterEmpty = (array) => array.filter(x => x.length > 0);
+const filterEmpty = (array) => array.filter(x => x.length > 0)
+
+const one = (input) => () =>
+  input
+    .reduce(splitOnBlankLines, [[]])
+    .map(reduceToString)
+    .map(dedupeString)
+    .map(stringLength)
+    .reduce(sum, 0);
 
 const two = (input) => () =>
   input
@@ -2319,6 +2343,6 @@ const two = (input) => () =>
     .map(dedupeString)
     .map(stringLength)
     .reduce(sum, 0);
-const partTwo = two(realInput);
 
-console.log(partTwo());
+export const partOne = one(realInput);
+export const partTwo = two(realInput);
