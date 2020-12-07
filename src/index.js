@@ -1,3 +1,3 @@
-import { partOne, partTwo } from "./days/6";
+import { partOne, partTwo } from "./days/7";
 
 console.log(partTwo());
