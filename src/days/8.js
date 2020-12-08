@@ -697,7 +697,48 @@ const one = (input) => () => {
   return process(input, 0, 0);
 };
 
-const two = (input) => () => 'not done';
+const two = (input) => () => {
+  const variants = input.map(([code, operator, value], index, all) => {
+    if (code === 'jmp') {
+      const copy = [...all];
+      copy[index] = ['nop', operator, value];
+      return copy;
+    } else if (code === 'nop') {
+      const copy = [...all];
+      copy[index] = ['jmp', operator, value];
+      return copy;
+    }
+
+    return null;
+  }).filter(Boolean);
+
+  const x = variants.map(variant => {
+    let visits = {};
+
+    const process = (instructions, index, accumulator) => {
+      if (index >= instructions.length) {
+        return accumulator;
+      }
+      
+      const visitCount = visits[index] || 0
+      if (visitCount >= 1) {
+        return null;
+      }
+
+      visits = { ...visits, [index]: visitCount + 1 };
+
+      const [code, operator, value] = instructions[index];
+      const fn = instructionStrategies[code];
+
+      const [nextIndex, nextAccumulator] = fn(index, operator, value, accumulator);
+      return process(instructions, nextIndex, nextAccumulator)
+    }
+
+    return process(variant, 0, 0);
+  })
+
+  return x.filter(Boolean)[0];
+}
 
 export const partOne = one(realInput);
-export const partTwo = two(testInput);
+export const partTwo = two(realInput);
