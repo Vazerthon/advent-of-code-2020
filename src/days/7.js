@@ -10,6 +10,16 @@ const testInput = [
   'dotted black bags contain no other bags.',
 ];
 
+const testInput2 = [
+  'shiny gold bags contain 2 dark red bags.',
+  'dark red bags contain 2 dark orange bags.',
+  'dark orange bags contain 2 dark yellow bags.',
+  'dark yellow bags contain 2 dark green bags.',
+  'dark green bags contain 2 dark blue bags.',
+  'dark blue bags contain 2 dark violet bags.',
+  'dark violet bags contain no other bags.',
+];
+
 const realInput = [
   'shiny plum bags contain no other bags.',
   'clear crimson bags contain 3 pale aqua bags, 4 plaid magenta bags, 3 dotted beige bags, 3 dotted black bags.',
@@ -687,22 +697,28 @@ const one = (input) => () => {
   return Object.keys(result).length;
 };
 
-// TODO - finish this
 const sumBags = (dictOfBags, entries, total) => {
-  const newTotal = total + entries.reduce((sum, [, count]) => sum + count, 0);
+  const totals = entries.map(([colour, quantity]) => {
+    const nextEntries = Object.entries(dictOfBags[colour]);
+    console.log(colour, nextEntries)
+    if (!nextEntries.length) {
+      console.log('returning', colour, quantity)
+      return quantity;
+    }
+    return quantity * sumBags(dictOfBags, nextEntries, total);
+  });
 
-  const next = entries.map(([colour]) => sumBags(dictOfBags, Object.entries(dictOfBags[colour]), total));
-  console.log(next)
-
-  return newTotal;
+  const sum = total + totals.reduce((acc, curr) => acc + curr, 0);
+  return sum;
 };
 
 const two = (input) => () => {
   const dictOfBags = descriptiveListToDictionary(input);
   const contents = Object.entries(dictOfBags['shiny gold']);
-  const result = sumBags(dictOfBags, contents, 0);
-  return result;
+  const entriesCount = contents.reduce((acc, [, count]) => acc + count, 0);
+  const result = sumBags(dictOfBags, contents, 0) + entriesCount;
+  return result
 };
 
 export const partOne = one(realInput);
-export const partTwo = two(testInput);
+export const partTwo = two(testInput2);
