@@ -1,4 +1,14 @@
-'use strict';
+const testInput = [
+  ['nop', '+', 0],
+  ['acc', '+', 1],
+  ['jmp', '+', 4],
+  ['acc', '+', 3],
+  ['jmp', '-', 3],
+  ['acc', '-', 99],
+  ['acc', '+', 1],
+  ['jmp', '-', 4],
+  ['acc', '+', 6],
+];
 
 const realInput = [
 ['acc', '+', 9],
@@ -659,7 +669,7 @@ const realInput = [
 const mathStrategies = {
   '+': (a, b) => a + b,
   '-': (a, b) => a - b,
-};
+}
 
 const instructionStrategies = {
   nop: (index, operator, value, accumulator) => [index + 1, accumulator],
@@ -671,7 +681,7 @@ const one = (input) => () => {
   let visits = {};
 
   const process = (instructions, index, accumulator) => {
-    const visitCount = visits[index] || 0;
+    const visitCount = visits[index] || 0
     if (visitCount >= 1) {
       return accumulator
     }
@@ -682,15 +692,12 @@ const one = (input) => () => {
     const fn = instructionStrategies[code];
     const [nextIndex, nextAccumulator] = fn(index, operator, value, accumulator);
     return process(instructions, nextIndex, nextAccumulator)
-  };
+  }
 
   return process(input, 0, 0);
 };
 
 const two = (input) => () => 'not done';
 
-const partOne = one(realInput);
-const partTwo = two();
-
-console.log('Part 1: ', partOne());
-console.log('Part 2: ', partTwo());
+export const partOne = one(realInput);
+export const partTwo = two(testInput);
