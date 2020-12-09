@@ -1,4 +1,25 @@
-'use strict';
+const testInput = [
+  35,
+  20,
+  15,
+  25,
+  47,
+  40,
+  62,
+  55,
+  65,
+  95,
+  102,
+  117,
+  150,
+  182,
+  127,
+  219,
+  299,
+  277,
+  309,
+  576,
+];
 
 const realInput = [
   4,
@@ -1046,8 +1067,5 @@ const two = (input, target) => () => {
   }
 };
 
-const partOne = one(realInput, 25);
-const partTwo = two(realInput, 1721308972);
-
-console.log("Part 1: ", partOne());
-console.log("Part 2: ", partTwo());
+export const partOne = one(realInput, 25);
+export const partTwo = two(realInput, 1721308972);

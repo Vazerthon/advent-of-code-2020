@@ -2,9 +2,9 @@ const testInput = [];
 
 const realInput = [];
 
-const one = (input) => () => input;
+const one = (input) => () => "Not implemented";
 
-const two = (input) => () => input;
+const two = (input) => () => "Not implemented";
 
 export const partOne = one(testInput);
 export const partTwo = two(testInput);
