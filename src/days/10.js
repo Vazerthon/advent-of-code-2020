@@ -160,11 +160,25 @@ const one = (input) => () => {
 };
 
 const two = (input) => () => {
-  const starters = input.filter((x) => x <= 3);
-  starters.forEach((starter) => {
-    const nextOptions = input.filter((x) => x > starter && x <= starter + 3)
-    console.log(nextOptions)
-  })
+  const process = (sets, all) => {
+    const nextSets = sets.map((set) => {
+      const lastInSet = set[set.length - 1];
+      const nextOptions = all.filter((x) => x > lastInSet && x <= lastInSet + 3);
+      return nextOptions.map((option) => ([...set, option]));
+      
+    });
+
+    console.log(nextSets)
+    // if (nextSets === sets) {
+    //   return nextSets;
+    // }
+
+    // return process(nextSets, all);
+  };
+
+  const sorted = input.sort(numericalOrder);
+  const starters = sorted.filter((x) => x <= 3).map((starter) => ([ starter ]));
+  return process(starters, sorted);
 };
 
 export const partOne = one(realInput);
