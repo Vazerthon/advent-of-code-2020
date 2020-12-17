@@ -1,5 +1,3 @@
-'use strict';
-
 const testInput = [
   "L.LL.LL.LL",
   "LLLLLLL.LL",
@@ -12,6 +10,8 @@ const testInput = [
   "L.LLLLLL.L",
   "L.LLLLL.LL",
 ];
+
+const realInput = [];
 
 const stringToCharArray = (string) => string.split("");
 const joinStrings = (a, b) => `${a}${b}`;
@@ -62,8 +62,5 @@ const one = (input) => () => {
 
 const two = (input) => () => "Not implemented";
 
-const partOne = one(testInput);
-const partTwo = two();
-
-console.log("Part 1: ", partOne());
-console.log("Part 2: ", partTwo());
+export const partOne = one(testInput);
+export const partTwo = two(testInput);
